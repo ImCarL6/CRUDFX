@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 de set. de 2021, 16:41:26
+    Author     : carlo
+*/
+
+
+.root{
+    -fx-background-color: #1c1e21;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-text-background-color: #ffffff;
+    
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color:  #3a3b3c;
+    
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: white;
+}
+
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+}
+
+.table-cell:hover{
+    -fx-text-background-color: #CA3E47;
+}
+
+.table-row-cell:odd{
+    -fx-background-color:  #242526;
+    -fx-background-insets: 0, 0 0 1 0;
+    
+}
+.table-row-cell:even{
+    -fx-background-color: #202020;
+    -fx-background-insets: 0, 0 0 1 0;
+   
+}
