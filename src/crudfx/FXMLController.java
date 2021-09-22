@@ -6,13 +6,8 @@
 package crudfx;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -111,82 +106,13 @@ public class FXMLController implements Initializable {
             }
         } catch (Exception e){ 
         }
-        
-    }
-    
-    
-    @FXML
-    public ObservableList<Cliente> todos(){
-        
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList();
-                
-        try {
-            
-            Connection conexao = Conexao.conectar();
-            
-            String sql = "SELECT * FROM cliente";
-            
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()){
-                
-                Cliente cliente = new Cliente();
-                cliente.setCodigo(rs.getInt("codigo"));
-                cliente.setNome(rs.getString("nome"));
-                cliente.setCpf(rs.getString("cpf"));
-                cliente.setNascimento(rs.getString("nascimento"));
-                clientes.add(cliente);
-            }
-            
-            Conexao.desconectar();
-            
-        } catch (SQLException e){
-        }
-        
-        return clientes;
-    }
-    
-    @FXML
-    public ObservableList<Cliente> pesquisar(String nome){
-        
-        ObservableList<Cliente> clientes = FXCollections.observableArrayList();
-        
-        
-        try {
-            
-            Connection conexao = Conexao.conectar();
-            
-            String sql = "SELECT * FROM cliente WHERE nome LIKE ?";
-            
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            stmt.setString(1, "%" + nome + "%");
-            ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()){
-                
-                Cliente cliente = new Cliente();
-                cliente.setCodigo(rs.getInt("codigo"));
-                cliente.setNome(rs.getString("nome"));
-                cliente.setCpf(rs.getString("cpf"));
-                cliente.setNascimento(rs.getString("nascimento"));
-                clientes.add(cliente);
-            }
-            
-            Conexao.desconectar();
-            
-        } catch (SQLException e){
-        }
-        
-        
-        return clientes;
     }
     
     
     @FXML
     public void mostrarCliente(){
         
-        ObservableList<Cliente> list = todos();
+        ObservableList<Cliente> list = dao.todos();
         
         
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
@@ -198,10 +124,11 @@ public class FXMLController implements Initializable {
         
     }
     
+    
     @FXML
     private void mostrarClientePesquisar(){
         
-        ObservableList<Cliente> list = pesquisar(nome);
+        ObservableList<Cliente> list = dao.pesquisar(nome);
         
         
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
@@ -211,6 +138,7 @@ public class FXMLController implements Initializable {
         
         tabela.setItems(list);
     }
+    
     
     @FXML
     private void Pesquisar(ActionEvent event){
@@ -218,6 +146,7 @@ public class FXMLController implements Initializable {
         nome = Nome.getText();
         mostrarClientePesquisar();
     }
+    
     
     @FXML
     private void handleMouseAction(MouseEvent event){
@@ -228,6 +157,7 @@ public class FXMLController implements Initializable {
         Nasc.setText(c.getNascimento());
         atribuirCliente(c);
     }
+    
     
     @FXML
     private void Deletar(ActionEvent event){

@@ -1,8 +1,8 @@
 
 package crudfx;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ClienteDAO {
     
@@ -45,10 +45,11 @@ public class ClienteDAO {
         return erro;
     }
     
-    public List<Cliente> todos(){
+    
+    public ObservableList<Cliente> todos(){
         
-        List<Cliente> clientes = new ArrayList<>();
-        
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList();
+                
         try {
             
             Connection conexao = Conexao.conectar();
@@ -76,9 +77,10 @@ public class ClienteDAO {
         return clientes;
     }
     
-    public List<Cliente> pesquisar(String nome){
+    
+    public ObservableList<Cliente> pesquisar(String nome){
         
-        List<Cliente> clientes = new ArrayList<>();
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList();
         
         
         try {
@@ -110,36 +112,7 @@ public class ClienteDAO {
         return clientes;
     }
     
-    public Cliente obter(int codigo){
-        
-        try {
-            
-            Connection conexao = Conexao.conectar();
-            
-            String sql = "SELECT * FROM cliente WHERE codigo = ?";
-            
-            PreparedStatement stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, codigo);
-            
-            ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()){
-                
-                Cliente cliente = new Cliente();
-                cliente.setCodigo(rs.getInt("codigo"));
-                cliente.setNome(rs.getString("nome"));
-                cliente.setCpf(rs.getString("cpf"));
-                cliente.setNascimento(rs.getString("nascimento"));
-                return cliente;
-            }
-            
-            Conexao.desconectar();
-            
-        } catch (SQLException e) {
-        }
-        
-        return null;
-    }
+    
     
     public String excluir(int codigo){
         
