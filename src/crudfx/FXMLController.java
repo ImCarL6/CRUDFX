@@ -104,7 +104,7 @@ public class FXMLController implements Initializable {
                 AtribuirCliente(new Cliente());
                 MostrarCliente();
             }
-        } catch (Exception e){ 
+        } catch (Exception e){
         }
     }
     
@@ -181,7 +181,13 @@ public class FXMLController implements Initializable {
             }
             
         } catch (Exception e){
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Atenção");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Selecione uma linha para exclusão");
             
+        
+            alerta.show();
         }
     }
     
@@ -197,9 +203,8 @@ public class FXMLController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         codigo = 0;
         MostrarCliente();
-    }    
+    }
     
 }
