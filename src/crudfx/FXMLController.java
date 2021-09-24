@@ -69,7 +69,7 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField Nasc;
     
-    private void atribuirCliente(Cliente c){
+    private void AtribuirCliente(Cliente c){
         
         codigo = c.getCodigo();
         Nome.setText(c.getNome());
@@ -79,7 +79,7 @@ public class FXMLController implements Initializable {
     }
     
     
-    private Cliente obterCliente(){
+    private Cliente ObterCliente(){
         
         c = new Cliente();
         c.setCodigo(codigo);
@@ -97,11 +97,11 @@ public class FXMLController implements Initializable {
         
         try{
             
-            Cliente c = obterCliente();
+            Cliente c = ObterCliente();
             String erro = dao.salvar(c);
 
             if ("".equals(erro)){
-                atribuirCliente(new Cliente());
+                AtribuirCliente(new Cliente());
                 MostrarCliente();
             }
         } catch (Exception e){ 
@@ -155,7 +155,7 @@ public class FXMLController implements Initializable {
         Nome.setText(c.getNome());
         Cpf.setText(c.getCpf());
         Nasc.setText(c.getNascimento());
-        atribuirCliente(c);
+        AtribuirCliente(c);
     }
     
     
@@ -189,7 +189,7 @@ public class FXMLController implements Initializable {
     @FXML
     private void Novo(ActionEvent event){
         
-        atribuirCliente(new Cliente());
+        AtribuirCliente(new Cliente());
         MostrarCliente();
         
     }
