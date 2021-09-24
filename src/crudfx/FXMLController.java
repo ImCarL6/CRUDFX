@@ -102,7 +102,7 @@ public class FXMLController implements Initializable {
 
             if ("".equals(erro)){
                 atribuirCliente(new Cliente());
-                mostrarCliente();
+                MostrarCliente();
             }
         } catch (Exception e){ 
         }
@@ -110,7 +110,7 @@ public class FXMLController implements Initializable {
     
     
     @FXML
-    public void mostrarCliente(){
+    public void MostrarCliente(){
         
         ObservableList<Cliente> list = dao.todos();
         
@@ -126,7 +126,7 @@ public class FXMLController implements Initializable {
     
     
     @FXML
-    private void mostrarClientePesquisar(){
+    private void MostrarClientePesquisar(){
         
         ObservableList<Cliente> list = dao.pesquisar(nome);
         
@@ -144,12 +144,12 @@ public class FXMLController implements Initializable {
     private void Pesquisar(ActionEvent event){
         
         nome = Nome.getText();
-        mostrarClientePesquisar();
+        MostrarClientePesquisar();
     }
     
     
     @FXML
-    private void handleMouseAction(MouseEvent event){
+    private void HandleMouseAction(MouseEvent event){
         
         Cliente c = tabela.getSelectionModel().getSelectedItem();
         Nome.setText(c.getNome());
@@ -176,7 +176,7 @@ public class FXMLController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     dao.excluir(a);
-                    mostrarCliente();
+                    MostrarCliente();
                 }
             }
             
@@ -190,7 +190,7 @@ public class FXMLController implements Initializable {
     private void Novo(ActionEvent event){
         
         atribuirCliente(new Cliente());
-        mostrarCliente();
+        MostrarCliente();
         
     }
     
@@ -199,7 +199,7 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         codigo = 0;
-        mostrarCliente();
+        MostrarCliente();
     }    
     
 }
