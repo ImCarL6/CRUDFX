@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="676.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crudfx.FXMLController">
    <children>
-      <TableView fx:id="tabela" layoutX="15.0" layoutY="400.0" onMouseClicked="#HandleMouseAction" prefHeight="265.0" prefWidth="720.0">
+      <TableView fx:id="tabela" layoutX="15.0" layoutY="400.0" onMouseClicked="#ClicarTabela" prefHeight="265.0" prefWidth="720.0">
         <columns>
           <TableColumn fx:id="colCodigo" prefWidth="75.0" text="Código" />
           <TableColumn fx:id="colNome" prefWidth="75.0" text="Nome" />

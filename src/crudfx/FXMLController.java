@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package crudfx;
 
 import java.net.URL;
@@ -20,19 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-/**
- * FXML Controller class
- *
- * @author carlo
- */
 public class FXMLController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
     
+/********************************************************/
     @FXML
     private int codigo;
     
@@ -69,6 +54,84 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField Nasc;
     
+/********************************************************/
+    
+    
+    @FXML
+    private void Salvar(ActionEvent event){
+        
+        try{
+            
+            Cliente c = ObterCliente();
+            String erro = dao.Salvar(c);
+
+            if ("".equals(erro)){
+                AtribuirCliente(new Cliente());
+                MostrarCliente();
+                Alerta("Salvo com sucesso");
+            }
+        } catch (Exception e){
+        }
+    }
+    
+    
+    @FXML
+    private void Novo(ActionEvent event){
+        
+        AtribuirCliente(new Cliente());
+        MostrarCliente();
+        
+    }
+    
+    
+    @FXML
+    private void Pesquisar(ActionEvent event){
+        
+        nome = Nome.getText();
+        MostrarClientePesquisar();
+    }
+    
+    
+    @FXML
+    private void Deletar(ActionEvent event){
+        
+        
+        try{
+            
+            int a = tabela.getSelectionModel().getSelectedItem().getCodigo();
+            
+            
+                if (a != -1){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Atenção");
+                alert.setContentText("Deseja realmente excluir esse registro?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    dao.Excluir(a);
+                    MostrarCliente();
+                }
+            }
+            
+        } catch (Exception e){
+            
+            Alerta("Selecione uma linha para exclusão");
+            
+        }
+    }
+    
+     
+    @FXML
+    private void ClicarTabela(MouseEvent event){
+        
+        Cliente c = tabela.getSelectionModel().getSelectedItem();
+        Nome.setText(c.getNome());
+        Cpf.setText(c.getCpf());
+        Nasc.setText(c.getNascimento());
+        AtribuirCliente(c);
+    }
+    
+    
     private void AtribuirCliente(Cliente c){
         
         codigo = c.getCodigo();
@@ -91,29 +154,10 @@ public class FXMLController implements Initializable {
         
     }
     
-    
-    @FXML
-    private void Salvar(ActionEvent event){
-        
-        try{
-            
-            Cliente c = ObterCliente();
-            String erro = dao.salvar(c);
-
-            if ("".equals(erro)){
-                AtribuirCliente(new Cliente());
-                MostrarCliente();
-            }
-        } catch (Exception e){
-        }
-    }
-    
-    
     @FXML
     public void MostrarCliente(){
         
-        ObservableList<Cliente> list = dao.todos();
-        
+        ObservableList<Cliente> list = dao.Todos();
         
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -128,8 +172,7 @@ public class FXMLController implements Initializable {
     @FXML
     private void MostrarClientePesquisar(){
         
-        ObservableList<Cliente> list = dao.pesquisar(nome);
-        
+        ObservableList<Cliente> list = dao.Pesquisar(nome);
         
         colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -140,63 +183,14 @@ public class FXMLController implements Initializable {
     }
     
     
-    @FXML
-    private void Pesquisar(ActionEvent event){
-        
-        nome = Nome.getText();
-        MostrarClientePesquisar();
-    }
-    
-    
-    @FXML
-    private void HandleMouseAction(MouseEvent event){
-        
-        Cliente c = tabela.getSelectionModel().getSelectedItem();
-        Nome.setText(c.getNome());
-        Cpf.setText(c.getCpf());
-        Nasc.setText(c.getNascimento());
-        AtribuirCliente(c);
-    }
-    
-    
-    @FXML
-    private void Deletar(ActionEvent event){
-        
-        
-        try{
-            
-            int a = tabela.getSelectionModel().getSelectedItem().getCodigo();
-            
-            
-                if (a != -1){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Atenção");
-                alert.setContentText("Deseja realmente excluir esse registro?");
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                    dao.excluir(a);
-                    MostrarCliente();
-                }
-            }
-            
-        } catch (Exception e){
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+      @FXML
+    private void Alerta(String texto){
+         
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Atenção");
             alerta.setHeaderText(null);
-            alerta.setContentText("Selecione uma linha para exclusão");
-            
-        
+            alerta.setContentText(texto);
             alerta.show();
-        }
-    }
-    
-    
-    @FXML
-    private void Novo(ActionEvent event){
-        
-        AtribuirCliente(new Cliente());
-        MostrarCliente();
         
     }
     

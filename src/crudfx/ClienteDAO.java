@@ -1,18 +1,22 @@
-
 package crudfx;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class ClienteDAO {
     
-    public String salvar(Cliente c){
+    public String Salvar(Cliente c){
         
         String erro = "";
         
         try {
             
-            Connection conexao = Conexao.conectar();
+            Connection conexao = Conexao.Conectar();
             
             if (c.getCodigo() == 0){
             
@@ -36,7 +40,7 @@ public class ClienteDAO {
                 stmt.execute();
                 
             }
-                Conexao.desconectar();
+                Conexao.Desconectar();
             
         } catch (SQLException e) {
             erro = "Ocorreu um erro ao salvar" + e.getMessage();
@@ -46,13 +50,13 @@ public class ClienteDAO {
     }
     
     
-    public ObservableList<Cliente> todos(){
+    public ObservableList<Cliente> Todos(){
         
         ObservableList<Cliente> clientes = FXCollections.observableArrayList();
                 
         try {
             
-            Connection conexao = Conexao.conectar();
+            Connection conexao = Conexao.Conectar();
             
             String sql = "SELECT * FROM cliente";
             
@@ -69,7 +73,7 @@ public class ClienteDAO {
                 clientes.add(cliente);
             }
             
-            Conexao.desconectar();
+            Conexao.Desconectar();
             
         } catch (SQLException e){
         }
@@ -78,14 +82,14 @@ public class ClienteDAO {
     }
     
     
-    public ObservableList<Cliente> pesquisar(String nome){
+    public ObservableList<Cliente> Pesquisar(String nome){
         
         ObservableList<Cliente> clientes = FXCollections.observableArrayList();
         
         
         try {
             
-            Connection conexao = Conexao.conectar();
+            Connection conexao = Conexao.Conectar();
             
             String sql = "SELECT * FROM cliente WHERE nome LIKE ?";
             
@@ -103,7 +107,7 @@ public class ClienteDAO {
                 clientes.add(cliente);
             }
             
-            Conexao.desconectar();
+            Conexao.Desconectar();
             
         } catch (SQLException e){
         }
@@ -113,21 +117,20 @@ public class ClienteDAO {
     }
     
     
-    
-    public String excluir(int codigo){
+    public String Excluir(int codigo){
         
         String erro = "";
         
         try {
             
-            Connection conexao = Conexao.conectar();
+            Connection conexao = Conexao.Conectar();
             
             String sql = "DELETE FROM cliente WHERE codigo = ?";
             
             PreparedStatement stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, codigo);
             stmt.execute();
-            Conexao.desconectar();
+            Conexao.Desconectar();
             
             
         } catch (SQLException e){
